@@ -25,5 +25,5 @@ CREATE TABLE `equation_log` (
   `id` int NOT NULL,
   `equation` varchar(255) DEFAULT NULL,
   `result` varchar(45) DEFAULT NULL,
-  `summit_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `summit_date` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
