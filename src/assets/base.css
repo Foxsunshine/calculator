@@ -1,0 +1,187 @@
+/*=============== GOOGLE FONTS ===============*/
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@500;600;700&display=swap");
+
+/*=============== VARIABLES CSS ===============*/
+:root {
+   /* HSL color mode */
+   --background-color:  hsl(222, 26%, 31%);
+   --toggle-background-color:  hsl(223, 31%, 20%);
+   --toggle-background-color:  hsl(224, 36%, 15%);
+
+   --normal-key-background: hsl(225, 21%, 49%);
+   --normal-key-shadow:  hsl(224, 28%, 35%);
+
+   --second-key-background:  hsl(6, 63%, 50%);
+   --second-key-shadow: hsl(6, 70%, 34%);
+
+   --danger-key-background: hsl(30, 25%, 89%);
+   --danger-key-shadow: hsl(28, 16%, 65%);
+
+   --text-color-light: hsl(221, 14%, 31%);
+   --text-color-dark: hsl(0, 0%, 100%);
+   
+ 
+}
+/*=============== Variables Dark theme ===============*/
+
+
+body.theme-2 {
+  /* Theme 2 */
+  --main-background: hsl(0, 0%, 90%);
+  --toggle-keypad-background: hsl(0, 5%, 81%);
+  --screen-background: hsl(0, 0%, 93%);
+
+  --key-background-cyan: hsl(185, 42%, 37%);
+  --key-shadow-cyan: hsl(185, 58%, 25%);
+
+  --key-background-orange: hsl(25, 98%, 40%);
+  --key-shadow-orange: hsl(25, 99%, 27%);
+
+  --key-background-light-yellow: hsl(45, 7%, 89%);
+  --key-shadow-dark-orange: hsl(35, 11%, 61%);
+
+  --text-color-dark-yellow: hsl(60, 10%, 19%);
+  --text-color-white: hsl(0, 0%, 100%);
+}
+
+body.theme-3 {
+  /* Theme 3 */
+  --main-background: hsl(268, 75%, 9%);
+  --toggle-keypad-screen-background: hsl(268, 71%, 12%);
+
+  --key-background-violet: hsl(281, 89%, 26%);
+  --key-shadow-magenta: hsl(285, 91%, 52%);
+
+  --key-background-cyan: hsl(176, 100%, 44%);
+  --key-shadow-soft-cyan: hsl(177, 92%, 70%);
+
+  --key-background-dark-violet: hsl(268, 47%, 21%);
+  --key-shadow-dark-magenta: hsl(290, 70%, 36%);
+
+  --text-color-light-yellow: hsl(52, 100%, 62%);
+  --text-color-very-dark-blue: hsl(198, 20%, 13%);
+  --text-color-white: hsl(0, 0%, 100%);
+}
+
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/*
+
+:root {
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-black: #181818;
+  --vt-c-black-soft: #222222;
+  --vt-c-black-mute: #282828;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+
+
+:root {
+  --vt-c-white: #ffffff;
+  --vt-c-white-soft: #f8f8f8;
+  --vt-c-white-mute: #f2f2f2;
+
+  --vt-c-black: #181818;
+  --vt-c-black-soft: #222222;
+  --vt-c-black-mute: #282828;
+
+  --vt-c-indigo: #2c3e50;
+
+  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
+  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
+  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
+  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
+
+  --vt-c-text-light-1: var(--vt-c-indigo);
+  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
+  --vt-c-text-dark-1: var(--vt-c-white);
+  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+}
+
+
+:root {
+  --color-background: var(--vt-c-white);
+  --color-background-soft: var(--vt-c-white-soft);
+  --color-background-mute: var(--vt-c-white-mute);
+
+  --color-border: var(--vt-c-divider-light-2);
+  --color-border-hover: var(--vt-c-divider-light-1);
+
+  --color-heading: var(--vt-c-text-light-1);
+  --color-text: var(--vt-c-text-light-1);
+
+  --section-gap: 160px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: var(--vt-c-black);
+    --color-background-soft: var(--vt-c-black-soft);
+    --color-background-mute: var(--vt-c-black-mute);
+
+    --color-border: var(--vt-c-divider-dark-2);
+    --color-border-hover: var(--vt-c-divider-dark-1);
+
+    --color-heading: var(--vt-c-text-dark-1);
+    --color-text: var(--vt-c-text-dark-2);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  font-weight: normal;
+}
+
+body {
+  min-height: 100vh;
+  color: var(--color-text);
+  background: var(--color-background);
+  transition: color 0.5s, background-color 0.5s;
+  line-height: 1.6;
+  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
+    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-size: 15px;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+*/
