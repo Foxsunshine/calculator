@@ -7,10 +7,12 @@ USE `aiful`;
 DROP TABLE IF EXISTS `equation_log`;
 
 CREATE TABLE `equation_log` (
-  `id` int NOT NULL,
-  `equation` varchar(255) DEFAULT NULL,
-  `result` varchar(45) DEFAULT NULL,
-  `summit_date` DATETIME DEFAULT CURRENT_TIMESTAMP
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `equation` VARCHAR(255) DEFAULT NULL,
+  `result` VARCHAR(45) DEFAULT NULL,
+  `summit_date` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `status` VARCHAR(3) DEFAULT '00',
+  PRIMARY KEY (`id`)
 );
 
 --
@@ -19,12 +21,12 @@ CREATE TABLE `equation_log` (
 DROP TABLE IF EXISTS `personal_information`;
 
 CREATE TABLE `personal_information` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) DEFAULT NULL,
-  `email` varchar(45) DEFAULT NULL,
-  `phone_number` varchar(45) DEFAULT NULL,
-  `equation_id` int DEFAULT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(50) DEFAULT NULL,
+  `email` VARCHAR(45) DEFAULT NULL,
+  `phone_number` VARCHAR(45) DEFAULT NULL,
+  `equation_id` INT DEFAULT NULL,
   PRIMARY KEY (`id`),
-  FOREIGN KEY (`equation_id`) REFERENCES `equation_log` (`id`)
+  INDEX `idx_equation_id` (`equation_id`), -- Add an index for the foreign key column
+  FOREIGN KEY (`equation_id`) REFERENCES `equation_log` (`id`) -- Reference the `id` column in `equation_log`
 );
-

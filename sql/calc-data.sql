@@ -3,6 +3,14 @@
 --
 
 INSERT INTO
+  `equation_log` (id)
+VALUES
+('001'),
+  ('002'),
+  ('003');
+
+
+INSERT INTO
   `personal_information` (name, email,phone_number,equation_id)
 VALUES
 ('松井　孝典', 'matsuii@gmail.com','00000001','001'),
