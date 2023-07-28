@@ -1,22 +1,23 @@
 /*=============== GOOGLE FONTS ===============*/
-@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@500;600;700&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
 
 /*=============== VARIABLES CSS ===============*/
 :root {
    /* HSL color mode */
    --background-color:  hsl(222, 26%, 31%);
    --toggle-background-color:  hsl(223, 31%, 20%);
-   --toggle-background-color:  hsl(224, 36%, 15%);
+   --screen-background-color:  hsl(224, 36%, 15%);
 
-   --normal-key-background: hsl(225, 21%, 49%);
-   --normal-key-shadow:  hsl(224, 28%, 35%);
+   --second-key-background: hsl(225, 74%, 79%);
+   --second-key-shadow:  hsl(224, 23%, 47%);
 
-   --second-key-background:  hsl(6, 63%, 50%);
-   --second-key-shadow: hsl(6, 70%, 34%);
+   --important-key-background:  hsl(6, 63%, 50%);
+   --important-key-shadow: hsl(6, 70%, 34%);
 
-   --danger-key-background: hsl(30, 25%, 89%);
-   --danger-key-shadow: hsl(28, 16%, 65%);
+   --normal-key-background: hsl(30, 25%, 89%);
+   --normal-key-shadow: hsl(28, 16%, 65%);
 
+   --text-color-body: hsl(0, 0%, 100%);
    --text-color-light: hsl(221, 14%, 31%);
    --text-color-dark: hsl(0, 0%, 100%);
    
@@ -26,43 +27,24 @@
 
 
 body.theme-2 {
-  /* Theme 2 */
-  --main-background: hsl(0, 0%, 90%);
-  --toggle-keypad-background: hsl(0, 5%, 81%);
-  --screen-background: hsl(0, 0%, 93%);
+   /* Theme 2  */
+  --background-color:  hsl(0, 0%, 90%);
+  --toggle-background-color: hsl(0, 5%, 81%);
+  --screen-background-color: hsl(0, 0%, 93%);
 
-  --key-background-cyan: hsl(185, 42%, 37%);
-  --key-shadow-cyan: hsl(185, 58%, 25%);
+  --second-key-background: hsl(184, 37%, 52%);
+  --second-key-shadow: hsl(185, 58%, 25%);
 
-  --key-background-orange: hsl(25, 98%, 40%);
-  --key-shadow-orange: hsl(25, 99%, 27%);
+  --important-key-background:  hsl(25, 98%, 40%);
+  --important-key-shadow: hsl(25, 99%, 27%);
 
-  --key-background-light-yellow: hsl(45, 7%, 89%);
-  --key-shadow-dark-orange: hsl(35, 11%, 61%);
+  --normal-key-background: hsl(45, 7%, 89%);
+  --normal-key-shadow: hsl(35, 11%, 61%);
 
-  --text-color-dark-yellow: hsl(60, 10%, 19%);
-  --text-color-white: hsl(0, 0%, 100%);
+  --text-color-body: hsl(60, 10%, 19%);
+  --text-color-light: hsl(60, 10%, 19%);
+  --text-color-dark: hsl(0, 0%, 100%);
 }
-
-body.theme-3 {
-  /* Theme 3 */
-  --main-background: hsl(268, 75%, 9%);
-  --toggle-keypad-screen-background: hsl(268, 71%, 12%);
-
-  --key-background-violet: hsl(281, 89%, 26%);
-  --key-shadow-magenta: hsl(285, 91%, 52%);
-
-  --key-background-cyan: hsl(176, 100%, 44%);
-  --key-shadow-soft-cyan: hsl(177, 92%, 70%);
-
-  --key-background-dark-violet: hsl(268, 47%, 21%);
-  --key-shadow-dark-magenta: hsl(290, 70%, 36%);
-
-  --text-color-light-yellow: hsl(52, 100%, 62%);
-  --text-color-very-dark-blue: hsl(198, 20%, 13%);
-  --text-color-white: hsl(0, 0%, 100%);
-}
-
 
 *,
 *::before,
@@ -74,114 +56,177 @@ body.theme-3 {
 
 body {
   min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition: color 0.5s, background-color 0.5s;
+  color: var(--text-color-body);
+  background: var(--background-color);
+  transition: color 1s, background-color 1s;
   line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  font-family: 'League Spartan', sans-serif;
+  font-weight: 700;
   font-size: 15px;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/*
+table{
+  margin: 1rem;
+}
 
-:root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
+tr{
+  font-size: 13px;
+}
 
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
+th{
+  margin-right: 30px;
+}
 
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+h6{
+  font-size: 15px;
 }
 
 
+/*=============== REUSABLE CSS CLASSES ===============*/
 
-:root {
-  --vt-c-white: #ffffff;
-  --vt-c-white-soft: #f8f8f8;
-  --vt-c-white-mute: #f2f2f2;
-
-  --vt-c-black: #181818;
-  --vt-c-black-soft: #222222;
-  --vt-c-black-mute: #282828;
-
-  --vt-c-indigo: #2c3e50;
-
-  --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
-  --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
-  --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
-  --vt-c-divider-dark-2: rgba(84, 84, 84, 0.48);
-
-  --vt-c-text-light-1: var(--vt-c-indigo);
-  --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
-  --vt-c-text-dark-1: var(--vt-c-white);
-  --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+.calc-container{
+  display:flex;
+  flex-direction: column;
+  max-width:350px;
+  margin: 0 2rem;
 }
 
-
-:root {
-  --color-background: var(--vt-c-white);
-  --color-background-soft: var(--vt-c-white-soft);
-  --color-background-mute: var(--vt-c-white-mute);
-
-  --color-border: var(--vt-c-divider-light-2);
-  --color-border-hover: var(--vt-c-divider-light-1);
-
-  --color-heading: var(--vt-c-text-light-1);
-  --color-text: var(--vt-c-text-light-1);
-
-  --section-gap: 160px;
+/*=============== HEADER ===============*/
+.header{
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.3rem;
+}
+.logo{
+  font-size: 25px;
+}
+.theme-container{
+  display:flex;
+  font-size: 11px;
+  justify-content:center;
+  align-items: center;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-background: var(--vt-c-black);
-    --color-background-soft: var(--vt-c-black-soft);
-    --color-background-mute: var(--vt-c-black-mute);
+.toggle-container {
+  position: relative;
+  height: 19px;
+  width: 36px;
+  background-color:var(--toggle-background-color); /* 你可以修改这个颜色 */
+  border-radius: 30px; /* 为了使得容器的边缘变圆，你可以设置border-radius为高度的一半 */
+}
 
-    --color-border: var(--vt-c-divider-dark-2);
-    --color-border-hover: var(--vt-c-divider-dark-1);
+.theme{
+  margin-right: 1rem;
+}
 
-    --color-heading: var(--vt-c-text-dark-1);
-    --color-text: var(--vt-c-text-dark-2);
+.theme-button {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: inline-block;
+  height: 13px;
+  width: 13px;
+  background-color:  var(--important-key-background); /* 你可以修改这个颜色 */
+  border: none;
+  border-radius: 50%; /* 通过设置border-radius为50%来使按钮变为圆形 */
+  cursor: pointer; /* 将鼠标指针变成手形，表示这是一个可点击的元素 */
+
+  transition: left 0.3s ease; /* 设置动画效果 */
+}
+
+/*=============== RESULT CONTAINER ===============*/
+.result-container{
+  /* margin: 1rem 0; */
+  margin-bottom: 1rem;
+  padding: 1.5rem;
+  font-size: 30px;
+  background-color: var(--screen-background-color);
+  border: none;
+  border-radius:8px;
+  text-align: right;
+  height: 100px;
+}
+.limited-msg{
+  font-size: 28px;
+  margin-bottom: 0;
+}
+
+@keyframes shake {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  25%, 75% {
+    transform: translateY(-2px);
+  }
+  50% {
+    transform: translateY(2px);
   }
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  font-weight: normal;
+.shake {
+  animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
 }
 
-body {
-  min-height: 100vh;
-  color: var(--color-text);
-  background: var(--color-background);
-  transition: color 0.5s, background-color 0.5s;
-  line-height: 1.6;
-  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,
-    Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
-  font-size: 15px;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+/*=============== OPERATATE CONTAINER ===============*/
+
+.operater-container{
+  background-color: var(--screen-background-color);
+  padding: 1rem;
+  border-radius:8px;
 }
-*/
+
+.row{
+  display: flex;
+}
+
+.number-button {
+  border: none;
+  margin: 8px 6px;
+  font-family: 'League Spartan', sans-serif;
+  font-size: 23px;
+  color: var(--text-color-light);
+  height: 40px;
+  width: 70px;
+  
+  background-color:  var(--normal-key-background); /* 你可以修改这个颜色 */
+  border: none;
+  border-radius: 8px; /* 通过设置border-radius为50%来使按钮变为圆形 */
+  cursor: pointer; /* 将鼠标指针变成手形，表示这是一个可点击的元素 */
+
+  box-shadow: 0px 3px  var(--normal-key-shadow); /* 添加一个右下方向的阴影 */
+
+  /* 其他样式保持不变 */
+  position: relative; /* 允许我们通过 'top' 属性移动按钮 */
+  top: 0;
+  transition: top 0.1s ease; /* 添加一个平滑过渡效果 */
+}
+
+.number-button:active{
+  top: 1px; /* 在按钮被按下时，将按钮向下移动一点 */
+}
+
+.del-button{
+  font-size: 20px;
+  background-color: var(--second-key-background);
+  color: var(--text-color-dark);
+  box-shadow: 0px 3px  var(--second-key-shadow); /* 添加一个右下方向的阴影 */
+}
+.reset-button{
+  width: 148px;
+  font-size: 20px;
+  background-color: var(--second-key-background);
+  color: var(--text-color-dark);
+  box-shadow: 0px 3px  var(--second-key-shadow); /* 添加一个右下方向的阴影 */
+}
+.equal-button{
+  width: 148px;
+  font-size: 20px;
+  background-color: var(--important-key-background);
+  color: var(--text-color-dark);
+
+  box-shadow: 0px 3px  var(--important-key-shadow); /* 添加一个右下方向的阴影 */
+}

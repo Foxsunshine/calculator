@@ -11,15 +11,21 @@ export default {
       ifShowResult:false,
       ifAvaliable:true,
       ifShowReset:false,
+
+      shouldShake:false,
+      buttonLeft:'5px',
+      theme: 'theme-1',
     }
   },
   methods: {
 
     reset(){
-      this.ifShowReset=false
       this.result = ''
       this.currentInput='0'
+      this.operator=''
+      this.ifShowResult=false
       this.ifAvaliable=true
+      this.ifShowReset=false
     },
     showResetMsg(){
       this.ifShowReset=true
@@ -28,15 +34,14 @@ export default {
     addNumber(e){
       if(!this.ifAvaliable){
         this.showResetMsg()
+        this.shake()
       }
       let currentInput = e.target.textContent
       if(this.currentInput == '0'){
         this.currentInput = currentInput
       }else if(this.ifAvaliable){
-
         //入力ところ
         this.currentInput += currentInput
-
       }
       let length=this.currentInput.length
       if(length>=17){
@@ -49,6 +54,7 @@ export default {
     operate(e){
       if(!this.ifAvaliable){
         this.showResetMsg()
+        this.shake()
       }
       if(this.operator=='')
         this.operator = e.target.textContent
@@ -66,6 +72,7 @@ export default {
     equal(){
       if(!this.ifAvaliable){
         this.showResetMsg()
+        this.shake()
       }
         let firstOperand=Number(this.result)
         let secondOperand=Number(this.currentInput)
@@ -85,13 +92,12 @@ export default {
         if(this.operator == 'x'){
           calculationResult =firstOperand * secondOperand
         }
-        if(!this.ifAvaliable )
+        if(this.ifAvaliable){
           this.result=calculationResult.toString()
+        }
 
         if(calculationResult>=MAX_LENGTH){
           this.ifAvaliable = false
-          //console.log("上限超えた!!!")
-          //this.result="上限超えた"
         }
 
         this.ifShowResult=true
@@ -100,110 +106,154 @@ export default {
     del(){
       if(!this.ifAvaliable){
         this.showResetMsg()
+        this.shake()
       }
       if(this.currentInput.length==1){
         this.currentInput='0'
       }else{
         this.currentInput=this.currentInput.substring(0,this.currentInput.length-1)}
-    }
+    },
+    toggleButton(){
+      this.buttonLeft = this.buttonLeft === '5px' ? '18px' :'5px';
+      this.theme = this.theme === 'theme-1' ? 'theme-2' : 'theme-1';  // 切换主题
+    },
+    updateBodyClass() {
+      // 移除旧的主题类名，添加新的主题类名
+      document.body.classList.remove('theme-1', 'theme-2');
+      document.body.classList.add(this.theme);
+    },
+    shake() {
+      this.shouldShake = true;
+      setTimeout(() => {
+        this.shouldShake = false;
+      }, 1000);
+    },
+  },
+  mounted() {
+    this.updateBodyClass();
+  },
+  watch: {
+    theme() {
+      this.updateBodyClass();
+    },
   }
 }
 
 </script>
 
 <template>
-  <div class="container">
+  <div class="whole-container">
+  <div class="calc-container">
     <div class="header">
       <h4 class="logo">calc</h4>
       <div class="theme-container">
         <h5 class="theme">THEME</h5>
-        <button class="theme-button">change</button>
+        <div class="toggle-container">
+          <button class="theme-button" :style="{left:buttonLeft}" @click="toggleButton"></button>
+        </div>
       </div>
     </div>
     <div class="result-container">
       <h3 v-if="ifShowResult && ifAvaliable" id="result" class="result">{{result}}</h3> 
       <h3 v-else-if="!ifShowResult && ifAvaliable" id="result" class="result">{{currentInput}}</h3>
-      <h3 v-else id="result" class="result">有効数字ではない</h3> 
-      <h6 v-if="ifShowReset">リセットしてください</h6>
+      <h3 v-else id="result" class="limited-msg">有効数字ではない</h3> 
+      <h6 v-if="ifShowReset" class="reset-msg" :class="{ shake: shouldShake }" >リセットしてください</h6>
     </div>
     <div class="operater-container">
       <div class="row">
-        <p @click="addNumber" class="mb-3">7</p>
-        <p @click="addNumber" class="mb-3">8</p>
-        <p @click="addNumber" class="mb-3">9</p>
-        <p @click="del" class="mb-3 del-button">DEL</p>
+        <button @click="addNumber" class="number-button">7</button>
+        <button @click="addNumber" class="number-button">8</button>
+        <button @click="addNumber" class="number-button">9</button>
+        <button @click="del" class="number-button del-button">DEL</button>
       </div>
       <div class="row">
-        <p @click="addNumber" class="mb-3">4</p>
-        <p @click="addNumber" class="mb-3">5</p>
-        <p @click="addNumber" class="mb-3">6</p>
-        <p @click="operate" class="mb-3">+</p>
+        <button @click="addNumber" class="number-button">4</button>
+        <button @click="addNumber" class="number-button">5</button>
+        <button @click="addNumber" class="number-button">6</button>
+        <button @click="operate" class="number-button">+</button>
       </div>
       <div class="row">
-        <p @click="addNumber" class="mb-3">1</p>
-        <p @click="addNumber" class="mb-3">2</p>
-        <p @click="addNumber" class="mb-3">3</p>
-        <p @click="operate" class="mb-3">-</p>
+        <button @click="addNumber" class="number-button">1</button>
+        <button @click="addNumber" class="number-button">2</button>
+        <button @click="addNumber" class="number-button">3</button>
+        <button @click="operate" class="number-button">-</button>
       </div>
       <div class="row">
-        <p class="mb-3">.</p>
-        <p @click="addNumber" class="mb-3">0</p>
-        <p @click="operate" class="mb-3">/</p>
-        <p @click="operate" class="mb-3">x</p>
+        <button @click="addNumber" class="number-button">.</button>
+        <button @click="addNumber" class="number-button">0</button>
+        <button @click="operate" class="number-button">/</button>
+        <button @click="operate" class="number-button">x</button>
       </div>
       <div class="row">
-        <button @click="reset" class="mb-4 reset-button">RESET</button>
-        <p @click="equal" class="mb-4 equal-button">=</p>
+        <button @click="reset" class="number-button reset-button">RESET</button>
+        <button @click="equal" class="number-button equal-button">=</button>
       </div>
     </div>
   </div>
+  <div class="history-container">
+      <!-- <table>
+        <tr>
+          <th>名前</th>
+          <th>計算式</th>
+          <th>計算結果</th>
+          <th>日付</th>
+        </tr> -->
+
+        <div class="history-msg">
+          <div class="history-msg-data">
+              <span class="time">2023-10-10 10:10:10</span>
+              <span>ジャンチェン : <span>1 + 1 = </span><span>2</span> </span>
+          </div>
+          <div class="history-msg-data">
+              <span class="time">2023-10-10 10:10:10</span>
+              <span>松井　孝典 : <span>1 x 1 = </span><span>1</span> </span>
+          </div>
+          <div class="history-msg-data">
+              <span class="time">2023-10-10 10:10:10</span>
+              <span>翁長　靖武 : <span>1 + 2 + 3 + 4 + 5 + 6 = </span><span>21</span> </span>
+          </div>
+        </div>
+
+        <!-- <div v-for="employee in employees" :key="employee.id">
+          <p>
+            <span>{{ employee.name }}</span>
+            <span>{{ employee.equation_log.equation }}</span>
+            <span>{{ employee.equation_log.result }}</span>
+            <span>{{ employee.equation_log.summit_date }}</span>
+          </p>>
+        </div> -->
+       
+      <!-- </table>
+    </div> -->
+  </div>
+</div>
 </template>
 
 <style scoped>
-.container{
-  display:flex;
-  flex-direction: column;
-  width:350px;
-  margin: 0 auto;
-}
-.header{
-  display:flex;
-  justify-content: space-between;
-}
-.theme-container{
-  display:flex;
-}
-.row{
+.whole-container{
   display: flex;
-  justify-content: space-between;
 }
-.mb-3{
-  margin: 10px;
-  background-color: gray;
-  width: 40px;
-  height: 25px;
-  text-align: center;
-  border-radius: 20px;
+.history-container{
+  display: flex;
+  padding-top: 1rem;
+  padding-left: 1rem;
+  width: 450px;
+  max-height: 600px;
+  background-color: var(--screen-background-color);
+  border-radius: 10px; 
 }
-.mb-4{
-  width: 160px;
-  height: 25px;
-  text-align: center;
-  border-radius: 20px;
-  color: aliceblue;
+.history-msg{
+  margin:0 0.5rem;
+  font-size: 13px;
+  opacity: 0.7;
 }
-.del-button{
-  background-color: aqua;
-  color: aliceblue;
+.history-msg-data{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.5rem;
 }
-.reset-button{
-  background-color: aqua;
-}
-.equal-button{
-  background-color: red;
-}
-.result-container{
-  text-align: right;
+.time{
+  font-size: 10px !important;
 }
 
 </style>
