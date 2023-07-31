@@ -1,7 +1,9 @@
 <script >
 import Decimal from 'decimal.js'
 
-const MAX_LENGTH = 10_000_000_000_000_000_000n;
+// const MAX_LENGTH = 10_000_000_000_000_000_000n;
+Decimal.set({ precision: 21 });
+let MAX_LENGTH = new Decimal('10000000000000000000');
 
 export default {
   data() {
@@ -57,9 +59,12 @@ export default {
         this.showResetMsg()
         this.shake()
       }
+
       if(this.operator=='')
         this.operator = e.target.textContent
-       if(this.result==''){
+
+        
+      if(this.result==''){
         this.result = this.currentInput
         this.ifFirstInput=false
         this.ifShowResult=true
@@ -69,6 +74,7 @@ export default {
       }
       this.operator = e.target.textContent
     },
+    
 
     equal(){
       if(!this.ifAvaliable){
@@ -84,8 +90,12 @@ export default {
           calculationResult =firstOperand.plus(secondOperand)
         if(this.operator == '-')
           calculationResult =firstOperand.minus(secondOperand)
+
         if(this.operator == '/')
         {
+
+          console.log("firstOperand " + firstOperand);
+          console.log("secondOperand " + secondOperand);
           if(secondOperand.eq(0)){
             this.ifAvaliable = false
           }else{
@@ -93,8 +103,12 @@ export default {
           }
         }
         if(this.operator == 'x'){
+          console.log("firstOperand " + firstOperand);
+          console.log("secondOperand " + secondOperand);
           calculationResult =firstOperand.times(secondOperand)
         }
+
+
         if(this.ifAvaliable){
           this.result=calculationResult.toString()
         }
@@ -103,7 +117,6 @@ export default {
           this.ifAvaliable = false
         }
 
-        this.result = calculationResult.toString();
         this.ifShowResult=true
         this.currentInput='0'
     },
@@ -218,14 +231,14 @@ export default {
     </div>
   </div>
   <div class="history-container">
-       <!--
+      <!--
         <div class="history-msg">
           <div class="history-msg-data">
               <span class="time">2023-10-10 10:10:10</span>
               <span>ジャンチェン : <span>1 + 1 = </span><span>2</span> </span>
           </div>
-
-        </div>-->
+        </div>
+      -->
 
         <div v-for="equationLog in equationLogs" :key="equationLog.id">
           <div class="history-msg">
