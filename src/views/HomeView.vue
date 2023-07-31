@@ -15,6 +15,8 @@ export default {
       shouldShake:false,
       buttonLeft:'5px',
       theme: 'theme-1',
+      equationLogs: [],
+      id:'-1',
     }
   },
   methods: {
@@ -128,6 +130,19 @@ export default {
         this.shouldShake = false;
       }, 1000);
     },
+    check() {
+    fetch(`http://localhost:8080/api/getequtationlogById/${this.id}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("ネットワークエラー。APIを呼び出せませんでした。");
+        }
+        return res.json();
+      })
+      .then((jsonData) => {
+        this.equationLogs = [jsonData]; // APIが1つの従業員オブジェクトを返す場合。複数の従業員を取得する場合はこの箇所を変更してください。
+      })
+      .catch((err) => console.error(err));
+  },
   },
   mounted() {
     this.updateBodyClass();
@@ -144,6 +159,10 @@ export default {
 <template>
   <div class="whole-container">
   <div class="calc-container">
+    <div class="user-container">
+      <div class="input-container"><h4>入力:<input v-model="id"></h4></div>
+      <div class="check-container"><button @click="check" class="check">確認</button></div>
+    </div>
     <div class="header">
       <h4 class="logo">calc</h4>
       <div class="theme-container">
@@ -191,14 +210,15 @@ export default {
     </div>
   </div>
   <div class="history-container">
-      <!-- <table>
+      <table>
         <tr>
           <th>名前</th>
           <th>計算式</th>
           <th>計算結果</th>
           <th>日付</th>
-        </tr> -->
+        </tr> 
 
+       <!--
         <div class="history-msg">
           <div class="history-msg-data">
               <span class="time">2023-10-10 10:10:10</span>
@@ -212,21 +232,25 @@ export default {
               <span class="time">2023-10-10 10:10:10</span>
               <span>翁長　靖武 : <span>1 + 2 + 3 + 4 + 5 + 6 = </span><span>21</span> </span>
           </div>
-        </div>
+        </div>-->
 
-        <!-- <div v-for="employee in employees" :key="employee.id">
+        <div class="history-msg">
+          <div class="history-msg-data">
+        <div v-for="equationLog in equationLogs" :key="equationLog.id">
           <p>
-            <span>{{ employee.name }}</span>
-            <span>{{ employee.equation_log.equation }}</span>
-            <span>{{ employee.equation_log.result }}</span>
-            <span>{{ employee.equation_log.summit_date }}</span>
-          </p>>
-        </div> -->
+            <span>{{ equationLog.personal_information.name }}</span>
+            <span>{{ equationLog.equation }}</span>
+            <span>{{ equationLog.result }}</span>
+            <span>{{ equationLog.summit_date }}</span>
+          </p>
+        </div> 
+        </div>
+        </div>
        
-      <!-- </table>
-    </div> -->
+      </table>
+    </div> 
   </div>
-</div>
+
 </template>
 
 <style scoped>
@@ -257,6 +281,3 @@ export default {
 }
 
 </style>
-
-
-aaaaa

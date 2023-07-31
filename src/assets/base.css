@@ -230,3 +230,13 @@ h6{
 
   box-shadow: 0px 3px  var(--important-key-shadow); /* 添加一个右下方向的阴影 */
 }
+
+/*=============== USER CONTAINER ===============*/
+.user-container{
+  display: flex;
+}
+.input-container{
+  border: 2px solid black;
+}
+.check-cotainer{
+}
