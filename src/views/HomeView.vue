@@ -9,6 +9,7 @@ export default {
       result: '',
       currentInput: '0',
       operator: '',
+
       ifShowResult: false,
       ifAvaliable: true,
       ifShowReset: false,
@@ -16,12 +17,12 @@ export default {
       shouldShake: false,
       buttonLeft: '5px',
       theme: 'theme-1',
+
       equationLogs: [],
       id: '',
     }
   },
   methods: {
-
     reset() {
       this.result = ''
       this.currentInput = '0'
@@ -33,7 +34,6 @@ export default {
     showResetMsg() {
       this.ifShowReset = true
     },
-
     addNumber(e) {
       if (!this.ifAvaliable) {
         this.showResetMsg()
@@ -53,18 +53,14 @@ export default {
     },
 
     operate(e) {
-      if (this.currentInput === '0' || this.currentInput === '') {
-        this.operator = e.target.textContent
-        return;
-      }
-
       if (!this.ifAvaliable) {
         this.showResetMsg()
         this.shake()
       }
-
-      if (this.operator == '')
+      if (this.currentInput === '0' || this.currentInput === '') {
         this.operator = e.target.textContent
+        return;
+      }
 
       if (this.result == '') {
         this.result = this.currentInput
@@ -94,8 +90,6 @@ export default {
       if (this.operator == '-')
         calculationResult = firstOperand.minus(secondOperand)
       if (this.operator == '/') {
-        console.log("firstOperand " + firstOperand);
-        console.log("secondOperand " + secondOperand);
         if (secondOperand.eq(0)) {
           this.ifAvaliable = false
         } else {
@@ -103,8 +97,6 @@ export default {
         }
       }
       if (this.operator == 'x') {
-        console.log("firstOperand " + firstOperand);
-        console.log("secondOperand " + secondOperand);
         calculationResult = firstOperand.times(secondOperand)
       }
       if (this.ifAvaliable) {
@@ -113,11 +105,9 @@ export default {
       if (calculationResult.gte(new Decimal(MAX_LENGTH))) {
         this.ifAvaliable = false
       }
-
       this.ifShowResult = true
       this.currentInput = '0'
     },
-
 
     del() {
       if (!this.ifAvaliable) {
@@ -130,12 +120,12 @@ export default {
         this.currentInput = this.currentInput.substring(0, this.currentInput.length - 1)
       }
     },
+
     toggleButton() {
       this.buttonLeft = this.buttonLeft === '5px' ? '18px' : '5px';
-      this.theme = this.theme === 'theme-1' ? 'theme-2' : 'theme-1';  // 切换主题
+      this.theme = this.theme === 'theme-1' ? 'theme-2' : 'theme-1';
     },
     updateBodyClass() {
-      // 移除旧的主题类名，添加新的主题类名
       document.body.classList.remove('theme-1', 'theme-2');
       document.body.classList.add(this.theme);
     },
@@ -145,7 +135,7 @@ export default {
         this.shouldShake = false;
       }, 1000);
     },
-    async check() {
+   check() {
       fetch(`http://localhost:8080/api/getequatationlogbyid/${this.id}`)
         .then((res) => {
           if (!res.ok) {
@@ -154,10 +144,9 @@ export default {
           return res.json();
         })
         .then((jsonData) => {
-          this.equationLogs = jsonData; // APIが1つの従業員オブジェクトを返す場合。複数の従業員を取得する場合はこの箇所を変更してください。
+          this.equationLogs = jsonData;
         })
         .catch((err) => console.error(err));
-
     },
   },
   mounted() {
@@ -169,7 +158,6 @@ export default {
     },
   }
 }
-
 </script>
 
 <template>
@@ -228,15 +216,13 @@ export default {
       </div>
     </div>
     <div class="history-container">
-
       <div v-for="equationLog in equationLogs" :key="equationLog.id" class="history-msg">
-          <div class="history-msg-data">
-            <span class="time">{{ equationLog.summitDate }}</span>
-            <span>{{ equationLog.personalInformation.name }}: <span>{{ equationLog.equation + " = "}}</span><span>{{
-              equationLog.result }}</span></span>
-          </div>
+        <div class="history-msg-data">
+          <span class="time">{{ equationLog.summitDate }}</span>
+          <span>{{ equationLog.personalInformation.name }}: <span>{{ equationLog.equation + " = " }}</span><span>{{
+            equationLog.result }}</span></span>
         </div>
-
+      </div>
     </div>
   </div>
 </template>
@@ -271,4 +257,5 @@ export default {
 
 .time {
   font-size: 10px !important;
-}</style>
+}
+</style>
