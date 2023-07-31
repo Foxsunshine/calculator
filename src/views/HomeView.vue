@@ -1,4 +1,5 @@
 <script >
+import Decimal from 'decimal.js'
 
 const MAX_LENGTH = 10_000_000_000_000_000_000n;
 
@@ -16,7 +17,7 @@ export default {
       buttonLeft:'5px',
       theme: 'theme-1',
       equationLogs: [],
-      id:'-1',
+      id:'',
     }
   },
   methods: {
@@ -42,13 +43,11 @@ export default {
       if(this.currentInput == '0'){
         this.currentInput = currentInput
       }else if(this.ifAvaliable){
-        //入力ところ
         this.currentInput += currentInput
       }
       let length=this.currentInput.length
       if(length>=17){
           this.ifAvaliable=false
-          //this.currentInput="上限超えた"
       }
       this.ifShowResult=false
     },
@@ -76,32 +75,35 @@ export default {
         this.showResetMsg()
         this.shake()
       }
-        let firstOperand=Number(this.result)
-        let secondOperand=Number(this.currentInput)
-        let calculationResult = 0
+      const firstOperand = new Decimal(this.result);
+      const secondOperand = new Decimal(this.currentInput);
+
+      let calculationResult = new Decimal(0);
+        
         if(this.operator == '+')
-          calculationResult =firstOperand + secondOperand
+          calculationResult =firstOperand.plus(secondOperand)
         if(this.operator == '-')
-          calculationResult =firstOperand - secondOperand
+          calculationResult =firstOperand.minus(secondOperand)
         if(this.operator == '/')
         {
-          if(secondOperand == '0'){
+          if(secondOperand.eq(0)){
             this.ifAvaliable = false
           }else{
-            calculationResult =firstOperand / secondOperand
+            calculationResult =firstOperand.dividedBy(secondOperand)
           }
         }
         if(this.operator == 'x'){
-          calculationResult =firstOperand * secondOperand
+          calculationResult =firstOperand.times(secondOperand)
         }
         if(this.ifAvaliable){
           this.result=calculationResult.toString()
         }
 
-        if(calculationResult>=MAX_LENGTH){
+        if(calculationResult.gte(new Decimal(MAX_LENGTH))){
           this.ifAvaliable = false
         }
 
+        this.result = calculationResult.toString();
         this.ifShowResult=true
         this.currentInput='0'
     },
@@ -131,17 +133,23 @@ export default {
       }, 1000);
     },
     check() {
-    fetch(`http://localhost:8080/api/getequtationlogById/${this.id}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error("ネットワークエラー。APIを呼び出せませんでした。");
-        }
-        return res.json();
-      })
-      .then((jsonData) => {
-        this.equationLogs = [jsonData]; // APIが1つの従業員オブジェクトを返す場合。複数の従業員を取得する場合はこの箇所を変更してください。
-      })
-      .catch((err) => console.error(err));
+      fetch(`http://localhost:8080/api/getequatationlogbyid/${this.id}`)
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error("ネットワークエラー。APIを呼び出せませんでした。");
+          }
+          return res.json();
+        })
+        .then((jsonData) => {
+          this.equationLogs = [jsonData]; // APIが1つの従業員オブジェクトを返す場合。複数の従業員を取得する場合はこの箇所を変更してください。
+          console.log(this.equationLogs);
+        })
+        .catch((err) => console.error(err));
+
+        console.log(this.equationLogs[0])
+        console.log(this.equationLogs[0].id)
+        console.log(this.equationLogs[0].personalInformation)
+      
   },
   },
   mounted() {
@@ -210,45 +218,25 @@ export default {
     </div>
   </div>
   <div class="history-container">
-      <table>
-        <tr>
-          <th>名前</th>
-          <th>計算式</th>
-          <th>計算結果</th>
-          <th>日付</th>
-        </tr> 
-
        <!--
         <div class="history-msg">
           <div class="history-msg-data">
               <span class="time">2023-10-10 10:10:10</span>
               <span>ジャンチェン : <span>1 + 1 = </span><span>2</span> </span>
           </div>
-          <div class="history-msg-data">
-              <span class="time">2023-10-10 10:10:10</span>
-              <span>松井　孝典 : <span>1 x 1 = </span><span>1</span> </span>
-          </div>
-          <div class="history-msg-data">
-              <span class="time">2023-10-10 10:10:10</span>
-              <span>翁長　靖武 : <span>1 + 2 + 3 + 4 + 5 + 6 = </span><span>21</span> </span>
-          </div>
+
         </div>-->
 
-        <div class="history-msg">
-          <div class="history-msg-data">
         <div v-for="equationLog in equationLogs" :key="equationLog.id">
-          <p>
-            <span>{{ equationLog.personal_information.name }}</span>
-            <span>{{ equationLog.equation }}</span>
-            <span>{{ equationLog.result }}</span>
-            <span>{{ equationLog.summit_date }}</span>
-          </p>
+          <div class="history-msg">
+            <div class="history-msg-data">
+              <span class="time">{{ equationLog.summit_date }}</span>
+              <span>{{ equationLog.personalInformation.name }}: <span>{{ equationLog.equation }}</span><span>{{ equationLog.result }}</span> </span>
+              </div>
+            </div>
         </div> 
-        </div>
-        </div>
-       
-      </table>
-    </div> 
+      
+  </div>
   </div>
 
 </template>
