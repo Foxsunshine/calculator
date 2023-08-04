@@ -1,41 +1,13 @@
-# calculator
+# 🧮 電卓 Calculator
 
-This template should help get you started developing with Vue 3 in Vite.
+**To see our Calculator, [Click here to Visit](https://aifulcalculator.netlify.app/)**
 
-## Recommended IDE Setup
+これは私たち3人で初めて協力して作った電卓です。Front End Mentorの[チャレンジ](https://www.frontendmentor.io/challenges/calculator-app-9lteq5N29)から取り上げました。初めてのチーム開発でわからないことも多かったですが、その間で皆が互いに助け合い、学び、問題を突破することで、本当に嬉しかったです。これからも皆一緒にさらに素晴らしいものを作り出せることを願っております。
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
 
-## Customize configuration
+## 🛠️ Framework and libraries used:
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+- [decimal.js](https://mikemcl.github.io/decimal.js/)
+- [Vue.js 3](https://vuejs.org/)
 
-## Project Setup
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-### Run Unit Tests with [Vitest](https://vitest.dev/)
-
-```sh
-npm run test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-npm run lint
-```

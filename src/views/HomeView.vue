@@ -2,7 +2,6 @@
 import Decimal from 'decimal.js'
 Decimal.set({ precision: 21 });
 let MAX_LENGTH = new Decimal('10000000000000000000');
-
 export default {
   data() {
     return {
@@ -17,9 +16,6 @@ export default {
       shouldShake: false,
       buttonLeft: '5px',
       theme: 'theme-1',
-
-      equationLogs: [],
-      id: '',
     }
   },
   methods: {
@@ -101,6 +97,8 @@ export default {
       }
       if (this.ifAvaliable) {
         this.result = calculationResult.toString()
+        if(this.result.length > 17)
+          this.roundNum();
       }
       if (calculationResult.gte(new Decimal(MAX_LENGTH))) {
         this.ifAvaliable = false
@@ -121,6 +119,17 @@ export default {
       }
     },
 
+    roundNum(){
+      if(Number(this.result[16]) > 4){
+        let tempNum =  (Number(this.result[15]) + 1);
+        console.log(tempNum)
+        this.result = this.result.substring(0,15) + tempNum ;
+      }
+      
+      this.result = this.result.substring(0,16);
+      console.log(this.result.length)
+    },
+
     toggleButton() {
       this.buttonLeft = this.buttonLeft === '5px' ? '18px' : '5px';
       this.theme = this.theme === 'theme-1' ? 'theme-2' : 'theme-1';
@@ -135,20 +144,7 @@ export default {
         this.shouldShake = false;
       }, 1000);
     },
-   check() {
-      fetch(`http://localhost:8080/api/getequatationlogbyid/${this.id}`)
-        .then((res) => {
-          if (!res.ok) {
-            throw new Error("ネットワークエラー。APIを呼び出せませんでした。");
-          }
-          return res.json();
-        })
-        .then((jsonData) => {
-          this.equationLogs = jsonData;
-        })
-        .catch((err) => console.error(err));
-    },
-  },
+
   mounted() {
     this.updateBodyClass();
   },
@@ -158,17 +154,11 @@ export default {
     },
   }
 }
+}
 </script>
 
 <template>
-  <div class="whole-container">
     <div class="calc-container">
-      <div class="user-container">
-        <div class="input-container">
-          <h4>入力:<input v-model="id"></h4>
-        </div>
-        <div class="check-container"><button @click="check" class="check">確認</button></div>
-      </div>
       <div class="header">
         <h4 class="logo">calc</h4>
         <div class="theme-container">
@@ -215,47 +205,5 @@ export default {
         </div>
       </div>
     </div>
-    <div class="history-container">
-      <div v-for="equationLog in equationLogs" :key="equationLog.id" class="history-msg">
-        <div class="history-msg-data">
-          <span class="time">{{ equationLog.summitDate }}</span>
-          <span>{{ equationLog.personalInformation.name }}: <span>{{ equationLog.equation + " = " }}</span><span>{{
-            equationLog.result }}</span></span>
-        </div>
-      </div>
-    </div>
-  </div>
 </template>
 
-<style scoped>
-.whole-container {
-  display: flex;
-}
-
-.history-container {
-  display: flex;
-  flex-direction: column;
-  padding-top: 1rem;
-  padding-left: 1rem;
-  width: 450px;
-  max-height: 600px;
-  background-color: var(--screen-background-color);
-  border-radius: 10px;
-}
-
-.history-msg {
-  margin: 0 0.5rem;
-  font-size: 13px;
-  opacity: 0.7;
-}
-
-.history-msg-data {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 0.5rem;
-}
-
-.time {
-  font-size: 10px !important;
-}
-</style>
